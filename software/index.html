@@ -50,5 +50,106 @@
             </li>
         </ul>
 
+        <hr>
+
+        <h2>Installation sur Debian</h2>
+
+        <p>
+            Nous proposons un repository apt pour une installation simplifiée des logiciels du projet Archipel.
+            Suivez les étapes suivantes pour l'ajouter à vos dépots.
+        </p>
+
+        <p>
+            <strong>Note</strong> Nous maintenons les packages pour la derniere version stable de debian (actuellement Bookworm) en amd64 uniquement
+        </p>
+
+        <p>1. Ajoutez notre <a href="archipel.asc">clé GPG</a></p>
+
+        <pre><code>curl https://archipel.labolyon.fr/software/archipel.asc | tee /etc/apt/trusted.gpg.d/archipel.asc</code></pre>
+
+        <p>2. Ajoutez la ligne suivante dans votre fichier <code>/etc/apt/sources.list</code></p>
+
+        <pre><code>deb https://archipel.labolyon.fr/software/apt/debian bookworm main</code></pre>
+
+        <p>3. Mettez à jour vos dépots APT</p>
+
+        <pre><code>apt update</code></pre>
+
+        <p>Les packages tels que <code>archipel-core</code> devraient être disponibles</p>
+
+        <pre><code>sudo apt search archipel</code></pre>
+
+        <pre><output>archipel-core/inconnu 0.12.0-292-ge66c20b amd64
+  DTN node for the Archipel Network</output></pre>
+
+        <hr>
+
+        <section id="package-list" hidden>
+            <h3>Packages disponibles</h3>
+            <p>La liste des packages actuellement disponible sur le dépôt :</p>
+
+            <ul></ul>
+        </section>
+        <script type="module">
+            async function initPackages(){
+                let packagesFile = await (await fetch("/software/apt/debian/dists/bookworm/main/binary-amd64/Packages")).text()
+                
+                let packages = []
+                let currentPackage = null
+                for(let line of packagesFile.split(/\r?\n/g)){
+                    if(line == ""){
+                        if(currentPackage){
+                            packages.push(currentPackage)
+                        }
+                        currentPackage = null
+                        continue;
+                    }
+
+                    let match = line.match(/^([^:]+):(.+)$/, 2)
+
+                    if(!match)
+                        continue
+
+                    if(!currentPackage){
+                        currentPackage = {}
+                    }
+
+                    let [_, key, value] = match
+                    if(key){
+                        currentPackage[key.trim()] = value.trim()
+                    }
+                }
+
+                if(packages.length == 0)
+                    return;
+                
+                let container = document.getElementById("package-list");
+                let list = container.querySelector("ul")
+
+                for(let pkg of packages){
+                    let el = document.createElement("li")
+
+                    let a = document.createElement(pkg["Homepage"] ? "a" : "span")
+                    if(pkg["Homepage"]){
+                        a.target = "_blank"
+                        a.href = pkg["Homepage"]
+                    }
+                    a.textContent = pkg["Package"]
+                    el.append(a)
+                    
+                    el.append(document.createTextNode(" "))
+                    
+                    let small = document.createElement("small")
+                    small.textContent = pkg["Version"]
+                    el.append(small)
+
+                    list.append(el)
+                }
+
+                container.hidden = false
+            }
+            initPackages()
+        </script>
+
     </main>
 </body>

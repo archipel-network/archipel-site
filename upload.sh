@@ -2,7 +2,7 @@ BASE_URL="https://archipel.labolyon.fr/"
 
 echo "Starting site update"
 
-for filename in $(find . -type f); do 
+for filename in $(find . -type f | grep -v .git); do 
     fileurl="$BASE_URL${filename#'./'}"
     mimetype=$(file --mime-type "$filename" | cut -d' ' -f2)
     echo "$filename" "$mimetype"

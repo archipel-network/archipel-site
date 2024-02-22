@@ -57,23 +57,21 @@
                 for(let software of Array.from(softwareCollection.hasPart)){
                     let el = document.createElement("li");
 
+
                     let a = document.createElement("a");
                     a.href = software.url["@id"]
                     a.target = "_blank"
-
-                    let strong = document.createElement("strong")
-                    strong.textContent = software.name
-                    a.append(strong)
+                    a.textContent = software.name
+                    el.append(a)
 
                     if(software.description){
                         let span = document.createElement("span")
                         span.textContent = software.description
 
-                        a.append(" – ")
-                        a.append(span)
+                        el.append(" – ")
+                        el.append(span)
                     }
 
-                    el.append(a)
                     list.append(el)
                 }
                 document.getElementById("software-list").append(list)
