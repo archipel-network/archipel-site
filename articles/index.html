@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles/global.css">
+    <link rel="shortcut icon" href="/assets/images/archipel-favicon.png" type="image/png">
+    <title>Logiciels Archipel - Un reseau soutenable tolérant au delai</title>
+</head>
+<body vocab="http://schema.org/">
+
+    <nav>
+        <a href="/">&lt;- Racine</a>
+    </nav>
+
+    <main resource="." typeof="Blog">
+        <link property="partOf" href="/" />
+        
+        <h1>
+            <span property="name">Blog Archipel</span>
+            <small>⊞ <span property="description">Textes et réflexions sur le réseau Archipel</span></small>
+        </h1>
+
+        <div id="article-cards"></div>
+
+        <h2>Liste des articles</h2>
+
+        <ul id="aricles-list">
+            <li><a property="hasPart" href="1-introduction/">Introduction aux réseaux tolérant au délai</a></li>
+            <li><a property="hasPart" href="2-reseau-soutenable/">Pour un réseau plus soutenable</a></li>
+        </ul>
+
+
+        <script type="module">
+            import {loadArticles} from "/assets/js/blog.js"
+            loadArticles(document.getElementById("article-cards"))
+        </script>
+    </main>
+</body>

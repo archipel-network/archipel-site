@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles/global.css">
+    <link rel="shortcut icon" href="/assets/images/archipel-favicon.png" type="image/png">
+    <title>Archipel - Un reseau soutenable tolérant au delai</title>
+<style>
+    #logo {
+        max-width: 200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 200px;
+    }
+</style>
+</head>
+
+<body vocab="http://schema.org/">
+    <main resource=".">
+
+	<img id="logo" property="logo" src="assets/images/archipel.svg" alt="Logo Archipel : Trois pointes au dessus d'une vague" />
+
+        <h1>
+            <span property="name">Archipel</span>
+            <small>▲ <span property="description">Un reseau soutenable tolérant au delai</span></small>
+        </h1>
+
+        <p property="abstract"><em>Archipel</em> est un ensemble de logiciels experimentaux qui tentent de constituer un reseau résillient, sobre et tolérant au delai.</p>
+
+        <p>Nous nous basons sur les concepts et logiciels des DTN (Delay Tolerant Networks) et des réseaux opportunistes pour creer de nouvelle manières d'utiliser le reseau. Plus sobre et respectueux de l'humain et de l'environnement; explorons de nouvelles manières de se connecter entre humains avec les outils numeriques.</p>
+
+        <hr>
+
+        <h2>Code</h2>
+
+        <p>Au sein de ce projet, nous développons une suite de logiciels éxperimentaux pour tester et constituer le réseau.</p>
+
+        <div id="software-list" property="hasPart" resource="/software/" typeof="Collection"></div>
+
+        <p class="more"><a href="/software/">Consulter tous les logiciels du projet -></a></p>
+
+        <script type="module">
+            import "/assets/js/lib/jsonld.js"
+            import rdfaParser from "/assets/js/lib/jsonld-rdfa.js"
+            jsonld.registerRDFParser('text/html', rdfaParser);
+            async function initSoftwareList(){
+                let softwareCollection = await jsonld.frame(await jsonld.fromRDF("/software/", {format: "text/html"}), {
+                    "@context": {"@vocab": "http://schema.org/", "@language": "fr", "hasPart": {"@container": "@set"}},
+                    "@type": "Collection"
+                })
+
+                let list = document.createElement("ul");
+                for(let software of Array.from(softwareCollection.hasPart)){
+                    let el = document.createElement("li");
+
+                    let a = document.createElement("a");
+                    a.href = software.url["@id"]
+                    a.target = "_blank"
+
+                    let strong = document.createElement("strong")
+                    strong.textContent = software.name
+                    a.append(strong)
+
+                    if(software.description){
+                        let span = document.createElement("span")
+                        span.textContent = software.description
+
+                        a.append(" – ")
+                        a.append(span)
+                    }
+
+                    el.append(a)
+                    list.append(el)
+                }
+                document.getElementById("software-list").append(list)
+            }
+            initSoftwareList()
+        </script>
+
+        <hr>
+
+        <h2>Contribuer</h2>
+
+        <p>Voici quelques elements sur lesquels nous travaillons et auxquel vous pouvez contribuer si vous en avez envie.</p>
+
+        <ul>
+            <li>Coder la persistance des bundles dans ud3tn <span class="tag">C</span></li>
+
+            <li>Implementer la couche de convergence <a href="https://www.rfc-editor.org/rfc/rfc9174.html">TCPCLv4</a> <span class="tag">C</span></li>
+
+            <li>Porter ud3tn sur ESP32 <span class="tag">C</span> <span class="tag">ESP32</span></li>
+
+            <li>Créer un proxy Web pour diriger les requêtes sur un DTN. En <span class="tag">Rust</span> ou en <span class="tag">Python</span></li>
+
+            <li>Créer un serveur Web qui repond aux requêtes provenant du DTN. En <span class="tag">Rust</span> ou en <span class="tag">Python</span></li>
+
+            <li>Faire un état de l'art des recherches en DTN. <div class="tag">Recherche</div></li>
+
+            <li>Rédiger un zine de présentation du protocol et du projet. <div class="tag">Rédaction</div> <div class="tag">Zine</div></li>
+        </ul>
+
+        <p>Contactez <a href="mailto:me@epickiwi.fr">EpicKiwi</a>, ouvrez des issues ou venez simplement au <a href="https://labolyon.fr/">LOL</a> pour en discuter ensemble.</p>
+
+        <hr>
+
+        <section property="hasPart" resource="/articles/" typeof="Blog">
+            <h2>Articles</h2>
+            <div id="article-cards"></div>
+            <p class="more"><a href="/articles/">Consulter tous les articles -></a></p>
+        </section>
+        <script type="module">
+            import {loadArticles} from "/assets/js/blog.js"
+            loadArticles(document.getElementById("article-cards"), {limit: 5})
+        </script>
+    </main>
+
+    <footer hidden id="update-footer">
+        Derniere mise à jour du site par <span id="update-author"></span> le <time id="upate-date"></time>
+    </footer>
+    <script type="module">
+        import "/assets/js/lib/jsonld.js"
+        let DATE_FORMATTER = new Intl.DateTimeFormat("fr-fr", {
+            dateStyle: "long",
+            timeStyle: "short"
+        })
+        async function initUpdate() {
+            let container = document.getElementById("update-footer");
+            container.hidden = true;
+
+            let lastUpdate = await jsonld.frame(new URL("/last-update.json", document.body.baseURI).toString(), {
+                "@context": {"@vocab": "http://schema.org/", "@language": "fr", "hasPart": {"@container": "@set"}},
+                "@type": "UpdateAction",
+                "object": { "@id": "https://archipel.labolyon.fr/" }
+            })
+
+            container.querySelector("#update-author").textContent = lastUpdate.agent.name
+            let date = container.querySelector("#upate-date");
+            date.textContent = DATE_FORMATTER.format(new Date(lastUpdate.endTime));
+            date.dateTime = lastUpdate.endTime
+
+            container.hidden = false
+        }
+        initUpdate()
+    </script>
+
+</body>
+
+</html>

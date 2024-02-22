@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles/global.css">
+    <link rel="shortcut icon" href="/assets/images/archipel-favicon.png" type="image/png">
+    <title>Introduction aux réseaux tolérant au délai - Archipel - Un reseau soutenable tolérant au delai</title>
+</head>
+<body vocab="http://schema.org/">
+
+    <nav>
+        <a href="/">&lt;- Racine</a>
+        <a href="..">&lt;- Tous les articles</a>
+    </nav>
+
+    <main resource="." typeof="Article">
+        <link property="partOf" href=".." />
+
+        <h1 property="name">Introduction aux réseaux tolérant au délai</h1>
+        <div class="meta">
+            <time property="datePublished" datetime="2023-07-16">16 Juillet 2023</time>
+        </div>
+
+        <p property="abstract"><strong>Un réseau tolérant au délai</strong> (DTN, Delay Tolerant Network) est un réseau qui permet la communication entre deux machines qui ne sont pas disponibles au même moment sur le reseau. On part du principe que l'information envoyée arrivera dans le futur a la destination mais on ne peux pas échanger directement.</p>
+
+        <p>Ce type de réseau est principalement utilisé dans le spacial de part les contraintes que cet environnement impose. Deux satellites ne sont pas forcement disponibles sur un réseau au même moment.</p>
+
+        <p>Ce type de réseau se base sur le fait que les noeuds du réseau (les machines par lesquel le message passe) vont stocker les messages à transmettre pour un certain temps avant de les transmettre. A partir de ce principe, il est possible d'imaginer plein de manière de transmettre et d'optimiser la transmission de messages.</p>
+
+        <p><strong>Un réseau opportuniste</strong> est un variante d'un DTN dans lequel la structure du réseau change constemment et on ne suppose pas qu'une destination est ou sera disponible dans le futur. L'objectif d'un réseau opportuniste est orienté sur le fait de transmettre de l'information aux machines qui se présentent sans l'adresser à une destination spécifique.</p>
+
+        <p><strong>Un Socially Aware Network (SAN)</strong><a href="#note-1">[1]</a> est un type de DTN qui se base sur les dynamiques sociales pour optimiser la transmission de l'information dans le réseau. On se place a l'intersection entre les études sociologiues et de dynamique des groupes pour concevoir des algorithmes de routage permettant de transmettre l'information le plus vite possible.</p>
+
+        <p>Le <strong>Bundle Protocol</strong> est une architecture et une implémentation d’un protocol DTN. Plus d’infos dans <a href="#bundle-protocol">l’article consacré</a>.</p>
+        
+        <footer>
+            <p id="note-side-1">[*] En fait, il est possible pour un Node d'avoir plusieurs EID. Pour permettre du <a href="https://fr.wikipedia.org/wiki/Multicast">multicast</a> entre autres. Mais on part du principe que <em>Un Node = Un EID</em> pour le moment.</p>
+    
+            <hr>
+    
+            <p id="note-1">[1] <a href="https://arxiv.org/abs/1312.6552v1"><em>Socially Aware Networking: A Survey</em></a> par Feng Xia, Li Liu, Jie Li, Jianhua Ma et Athanasios V. Vasilakos in IEEE Systems Journal - <time datetime="2015">2015</time></p>
+    
+            <p id="note-2">[2] <a href="https://www.rfc-editor.org/rfc/rfc4838"><em>RFC 4838 : Delay-Tolerant Networking Architecture</em></a> par V. Cerf, S. Burleigh, A. Hooke, L. Torgerson, R. Durst, K. Scott, K. Fall et H. Weiss - <time datetime="2007-04">Avril 2007</time></p>
+    
+            <p id="note-3">[3] <a href="https://www.rfc-editor.org/rfc/rfc9171.html"><em>RFC 9171 : Bundle Protocol Version 7</em></a> par S. Burleigh, K. Fall et E. Birrane - <time datetime="2022-01">Janvier 2022</time></p>
+    
+            <p id="note-4">[4] <a href="https://cbor.io/"><em>RFC 8949 : Concise Binary Object Representation</em></a></p>
+    
+            <p id="note-5">[5] <a href="https://www.nasa.gov/directorates/heo/scan/engineering/technology/disruption_tolerant_networking_software_options_ion/"><em>Interplanetary Overlay Network</em></a></p>
+    
+            <p id="note-6">[6] <a href="https://github.com/dtn7"><em> dtn7 - Implementations for the Bundle Protocol Version 7</em></a></p>
+    
+            <p id="note-7">[7] <a href="https://gitlab.com/d3tn/ud3tn"><em>µD3TN</em></a></p>
+    
+            <p id="note-8">[8] <a href="https://scholar.googleusercontent.com/scholar?q=cache:_p4dCa07C2cJ:scholar.google.com/"><em>Epidemic Routing for Partially-Connected Ad Hoc Networks</em></a> par Amin Vahdat et David Becker - <time datetime="2000-04">Avril 2000</time></p>
+    
+            <p id="note-9">[9] <a href="https://www.rfc-editor.org/rfc/rfc9174.html"><em>RFC 9174 : Delay-Tolerant Networking TCP Convergence-Layer Protocol Version 4</em></a> par B. Sipos, M. Demmer, J. Ott et S. Perreault - <time datetime="2022-01">Janvier 2022</time></p>
+    
+        </footer>
+
+    </main>
+
+</body>
