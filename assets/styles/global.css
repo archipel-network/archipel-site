@@ -292,6 +292,7 @@ ul {
 ul li {
     margin-top: 0.75em;
     margin-bottom: 0.75em;
+    line-height: 1.5;
 }
 
 ul ::marker{
@@ -346,4 +347,16 @@ body > footer {
     text-align: center;
     opacity: 0.5;
     padding-bottom: 2em;
+}
+
+i img {
+    height: 1em;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    transform: translateY(0.2em);
+}
+
+i.status {
+    font-style: normal;
 }
