@@ -14,7 +14,9 @@ export async function loadArticles(container, options) {
         ...options
     }
 
-    let blog = await jsonld.frame(await jsonld.fromRDF("/articles/", { format: "text/html" }), {
+    let url = `/${container.closest("[lang]").lang}/articles/`;
+
+    let blog = await jsonld.frame(await jsonld.fromRDF(url, { format: "text/html" }), {
         "@context": CONTEXT,
         "@type": "Blog"
     })

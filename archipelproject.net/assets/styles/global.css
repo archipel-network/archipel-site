@@ -164,6 +164,10 @@ a {
     text-decoration: underline;
 }
 
+a:not([href]){
+    text-decoration: none;
+}
+
 strong {
     font-weight: bold;
     color: black;
